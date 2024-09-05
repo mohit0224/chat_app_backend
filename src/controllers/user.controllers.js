@@ -12,8 +12,9 @@ const cookieOptions = (time) => {
 };
 
 export const createAccount = asyncHandler(async (req, res) => {
-    res.cookie("token", "mohit-dheer", cookieOptions(5 * 60 * 1000));
-    res.status(200).json(new apiResponse(200, "user created"));
+    res.cookie("token", "mohit-dheer", cookieOptions(5 * 60 * 1000))
+        .status(200)
+        .json(new apiResponse(200, "user created"));
 });
 
 export const getUser = asyncHandler(async (req, res) => {
