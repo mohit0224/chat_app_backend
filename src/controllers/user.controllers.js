@@ -1,5 +1,4 @@
 import { isProduction } from "../app.js";
-
 import { apiError, apiResponse } from "../utils/httpresponse.utils.js";
 
 const cookieOptions = (time) => {
