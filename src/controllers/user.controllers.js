@@ -10,21 +10,22 @@ const cookieOptions = (time) => {
     };
 };
 
-export const createAccount = async (req, res) => {
+export const createAccount = async (req, res, next) => {
     try {
         res.cookie("token", "mohit-dheer", cookieOptions(5 * 60 * 1000))
             .status(200)
             .json(new apiResponse(200, "user created"));
     } catch (err) {
-        res.status(err.status).json({
-            message: err.message,
-            status: err.status,
-            success: err.success,
-        });
+        // res.status(err.status).json({
+        //     message: err.message,
+        //     status: err.status,
+        //     success: err.success,
+        // });
+        next(err);
     }
 };
 
-export const getUser = async (req, res) => {
+export const getUser = async (req, res, next) => {
     try {
         const token = req.user;
         const data = {
@@ -33,10 +34,11 @@ export const getUser = async (req, res) => {
         };
         res.status(200).json(new apiResponse(200, "get user", data));
     } catch (err) {
-        res.status(err.status).json({
-            message: err.message,
-            status: err.status,
-            success: err.success,
-        });
+        // res.status(err.status).json({
+        //     message: err.message,
+        //     status: err.status,
+        //     success: err.success,
+        // });
+        next(err);
     }
 };
