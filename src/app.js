@@ -35,15 +35,19 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/health-check", healthRouter);
 
 app.use((err, req, res, next) => {
+    if (res.headersSent) {
+        return next(err);
+    }
+    
     if (err instanceof apiError) {
-        return res.status(err.status).json({
+        res.status(err.status).json({
             message: err.message,
             status: err.status,
             success: err.success,
             errors: err.errors,
         });
     } else {
-        return res.status(500).json({
+        res.status(500).json({
             message: err.message,
             status: 500,
             success: false,
