@@ -9,8 +9,10 @@ const corsConfig = {
             callback(new Error("Not allowed by CORS"));
         }
     },
-
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     credentials: true,
+    optionsSuccessStatus: 204,
+    maxAge: 600,
 };
 
 export default corsConfig;
