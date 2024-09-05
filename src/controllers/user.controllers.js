@@ -20,7 +20,6 @@ export const createAccount = async (req, res) => {
             message: err.message,
             status: err.status,
             success: err.success,
-            errors: err.errors,
         });
     }
 };
@@ -38,7 +37,6 @@ export const getUser = async (req, res) => {
             message: err.message,
             status: err.status,
             success: err.success,
-            errors: err.errors,
         });
     }
 };
