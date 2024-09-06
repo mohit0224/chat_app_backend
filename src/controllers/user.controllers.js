@@ -7,7 +7,7 @@ const cookieOptions = (time) => {
         maxAge: time,
         httpOnly: true,
         secure: isProduction,
-        sameSite: "none",
+        sameSite: isProduction ? "none" : "strict",
     };
 };
 

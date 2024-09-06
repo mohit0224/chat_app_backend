@@ -1,4 +1,4 @@
-import { apiError, apiResponse } from "../utils/httpresponse.utils.js";
+import { apiError } from "../utils/httpresponse.utils.js";
 
 const isLoggedIn = (req, res, next) => {
     const { token } = req.cookies;
@@ -13,7 +13,7 @@ const isLoggedIn = (req, res, next) => {
         req.user = token;
         next();
     } else {
-        throw new apiError(400, "Invalid");
+        throw new apiError(400, "Invalid token or token not found");
     }
 };
 

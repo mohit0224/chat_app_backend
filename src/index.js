@@ -18,24 +18,4 @@ server.listen(PORT, () => {
 //         process.exit(1);
 //     });
 
-// Handle SIGTERM signal for graceful shutdown
-process.on("SIGTERM", () => {
-    console.log("SIGTERM signal received: closing HTTP server");
-    server.close(() => {
-        console.log("HTTP server closed");
-        // mongoose.connection.close();
-        // console.log("MongoDb connection closed.");
-        process.exit(0);
-    });
-});
 
-// Handle SIGINT (e.g., for local development)
-process.on("SIGINT", () => {
-    console.log("\nSIGINT signal received: closing HTTP server");
-    server.close(() => {
-        console.log("HTTP server closed");
-        // mongoose.connection.close();
-        // console.log("MongoDb connection closed.");
-        process.exit(0);
-    });
-});
