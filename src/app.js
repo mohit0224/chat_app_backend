@@ -14,7 +14,7 @@ import compression from "compression";
 import isHttps from "./middlewares/isHttps.middleware.js";
 import healthRouter from "./routes/health.routes.js";
 import userRouter from "./routes/user.routes.js";
-import { apiError } from "./utils/httpresponse.utils.js";
+import globalErrorHandler from "./middlewares/globalErrorHandler.middleware.js";
 
 const app = express();
 const server = createServer(app);
@@ -35,26 +35,6 @@ app.use(compression());
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/health-check", healthRouter);
 
-app.use((err, req, res, next) => {
-    if (res.headersSent) {
-        return next(err);
-    }
-
-    if (err instanceof apiError) {
-        res.status(err.status).json({
-            message: err.message,
-            status: err.status,
-            success: err.success,
-            errors: err.errors,
-        });
-    } else {
-        res.status(500).json({
-            message: err.message,
-            status: 500,
-            success: false,
-            errors: [],
-        });
-    }
-});
+app.use(globalErrorHandler);
 
 export default server;
