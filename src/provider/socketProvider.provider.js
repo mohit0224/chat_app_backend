@@ -7,11 +7,11 @@ const socketProvider = (io) => {
             users[userId] = socket.id;
         }
 
-        io.emit("howIsOnline", Object.keys(users));
+        io.emit("whoIsOnline", Object.keys(users));
 
         socket.on("disconnect", () => {
             delete users[userId];
-            io.emit("howIsOnline", Object.keys(users));
+            io.emit("whoIsOnline", Object.keys(users));
         });
     });
 };
