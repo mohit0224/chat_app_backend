@@ -5,7 +5,7 @@ import limiter from "../middlewares/rateLimiter.middleware.js";
 
 const router = Router();
 
-router.post("/", limiter, createAccount);
+router.post("/", limiter(), createAccount);
 
 router.get("/", isLoggedIn, getUser);
 
