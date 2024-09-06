@@ -6,7 +6,7 @@ const cookieOptions = (time) => {
     return {
         httpOnly: true,
         secure: isProduction,
-        sameSite: "Strict",
+        sameSite: "None",
         maxAge: time,
     };
 };
