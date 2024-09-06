@@ -11,8 +11,9 @@ const isHttps = (req, res, next) => {
 
         console.log("🚀 ~ isHttps ~ req.secure:", req.secure);
         res.redirect(`https://${req.headers.host}${req.url}`);
+    } else {
+        return next();
     }
-    return next();
 };
 
 export default isHttps;
