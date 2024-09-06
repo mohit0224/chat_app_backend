@@ -110,9 +110,9 @@ export const healthCheck = async (req, res) => {
     if (dbStatus !== "connected" || apiStatus !== "Ok") {
         healthStatus.status = "error";
         return res
-            .status(500)
+            .status(200)
             .json(
-                new apiResponse(500, "Health status check-up !!", healthStatus)
+                new apiResponse(200, "Health status check-up !!", healthStatus)
             );
     }
 
