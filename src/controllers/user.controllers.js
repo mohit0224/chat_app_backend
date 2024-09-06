@@ -4,10 +4,11 @@ import { apiResponse } from "../utils/httpresponse.utils.js";
 
 const cookieOptions = (time) => {
     return {
+        domain: ".test-front-six-teal.vercel.app",
+        maxAge: time,
         httpOnly: true,
         secure: isProduction,
         sameSite: "none",
-        maxAge: time,
     };
 };
 
