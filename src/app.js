@@ -15,6 +15,7 @@ import isHttps from "./middlewares/isHttps.middleware.js";
 import healthRouter from "./routes/health.routes.js";
 import userRouter from "./routes/user.routes.js";
 import globalErrorHandler from "./middlewares/globalErrorHandler.middleware.js";
+import socketProvider from "./provider/socketProvider.provider.js";
 
 const app = express();
 const server = createServer(app);
@@ -32,29 +33,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 app.use(compression());
 
-const users = {};
-io.on("connection", (socket) => {
-    const { userId } = socket.handshake.auth;
-    if (users !== undefined) {
-        users[userId] = socket.id;
-    }
-
-    io.emit("howIsOnline", Object.keys(users));
-
-    socket.on("disconnect", () => {
-        delete users[userId];
-        io.emit("howIsOnline", Object.keys(users));
-    });
-});
-
-export const checkUserIDInUsersAndReturnSocketId = (userID) => {
-    if (!users[userID]) {
-        console.log(`No user found with this userID: ${userID}`);
-        return null;
-    }
-
-    return users[userID];
-};
+socketProvider(io);
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/health-check", healthRouter);
