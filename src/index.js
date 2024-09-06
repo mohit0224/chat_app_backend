@@ -3,13 +3,6 @@ import server, { isProduction } from "./app.js";
 import dbConnect from "./database/index.js";
 const PORT = process.env.PORT || 8000;
 
-// dbConnect()
-//     .then(() => {})
-//     .catch((err) => {
-//         console.error("Error connecting to the database:", err);
-//         process.exit(1);
-//     });
-
 server.listen(PORT, () => {
     const message = isProduction
         ? `Server listening on ${PORT}`
@@ -17,6 +10,13 @@ server.listen(PORT, () => {
 
     console.log(message);
 });
+
+// dbConnect()
+//     .then(() => {})
+//     .catch((err) => {
+//         console.error("Error connecting to the database:", err);
+//         process.exit(1);
+//     });
 
 // Handle SIGTERM signal for graceful shutdown
 // process.on("SIGTERM", () => {
@@ -39,5 +39,3 @@ server.listen(PORT, () => {
 //         process.exit(0);
 //     });
 // });
-
-
