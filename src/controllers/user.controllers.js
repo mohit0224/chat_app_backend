@@ -7,7 +7,8 @@ const cookieOptions = (time) => {
         maxAge: time,
         httpOnly: true,
         secure: isProduction,
-        sameSite: isProduction ? "none" : "strict",
+        sameSite: isProduction ? "None" : "Strict",
+        path: "/",
     };
 };
 
@@ -18,6 +19,8 @@ export const createAccount = asyncHandler(async (req, res) => {
 });
 
 export const getUser = asyncHandler(async (req, res) => {
+    console.log(req);
+
     const token = req.user;
     const data = {
         username: token,
