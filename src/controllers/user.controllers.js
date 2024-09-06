@@ -1,5 +1,4 @@
 import { isProduction } from "../app.js";
-import envConfig from "../config/env.config.js";
 import asyncHandler from "../utils/asynchandler.utils.js";
 import { apiResponse } from "../utils/httpresponse.utils.js";
 
@@ -7,9 +6,8 @@ const cookieOptions = (time) => {
     return {
         httpOnly: true,
         secure: isProduction,
-        sameSite: "none",
+        sameSite: "Strict",
         maxAge: time,
-        domain: ".test-front-six-teal.vercel.app",
     };
 };
 
