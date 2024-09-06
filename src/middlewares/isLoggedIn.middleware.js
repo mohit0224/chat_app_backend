@@ -14,11 +14,6 @@ const isLoggedIn = (req, res, next) => {
         next();
     } else {
         throw new apiError(400, "Invalid");
-
-        // return res.status(400).json({
-        //     message: "Invalid",
-        //     success: false,
-        // });
     }
 };
 
