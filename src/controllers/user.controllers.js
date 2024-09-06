@@ -7,7 +7,7 @@ const cookieOptions = (time) => {
     return {
         httpOnly: true,
         secure: isProduction,
-        sameSite: "None",
+        sameSite: "Strict",
         maxAge: time,
         domain: envConfig.FRONTEND_URI,
     };
