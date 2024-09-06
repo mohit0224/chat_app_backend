@@ -21,7 +21,7 @@ const server = createServer(app);
 export const io = new Server(server, socketConfig);
 export const isProduction = process.env.NODE_ENV === "production";
 
-app.use(isHttps);
+// app.use(isHttps);
 app.use(cors(corsConfig));
 app.use(helmet(helmetConfig));
 app.use(morgan(morganFormat, morganFnc));
@@ -34,26 +34,26 @@ app.use(compression());
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/health-check", healthRouter);
 
-// app.use((err, req, res, next) => {
-//     if (res.headersSent) {
-//         return next(err);
-//     }
+app.use((err, req, res, next) => {
+    if (res.headersSent) {
+        return next(err);
+    }
     
-//     if (err instanceof apiError) {
-//         res.status(err.status).json({
-//             message: err.message,
-//             status: err.status,
-//             success: err.success,
-//             errors: err.errors,
-//         });
-//     } else {
-//         res.status(500).json({
-//             message: err.message,
-//             status: 500,
-//             success: false,
-//             errors: [],
-//         });
-//     }
-// });
+    if (err instanceof apiError) {
+        res.status(err.status).json({
+            message: err.message,
+            status: err.status,
+            success: err.success,
+            errors: err.errors,
+        });
+    } else {
+        res.status(500).json({
+            message: err.message,
+            status: 500,
+            success: false,
+            errors: [],
+        });
+    }
+});
 
 export default server;
