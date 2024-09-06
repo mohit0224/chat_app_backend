@@ -23,7 +23,7 @@ export const isProduction = process.env.NODE_ENV === "production";
 
 app.use(cors(corsConfig));
 app.use(helmet(helmetConfig));
-app.use(isHttps);
+// app.use(isHttps);
 app.use(morgan(morganFormat, morganFnc));
 app.use(express.json({ limit: "20kb" }));
 app.use(express.urlencoded({ extended: true, limit: "20kb" }));

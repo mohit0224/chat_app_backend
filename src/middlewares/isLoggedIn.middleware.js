@@ -13,9 +13,10 @@ const isLoggedIn = (req, res, next) => {
         req.user = token;
         next();
     } else {
-        return res
-            .status(400)
-            .json(new apiResponse(400, "Invalid token or token not found"));
+        return res.status(400).json({
+            message: "Invalid",
+            success: false,
+        });
     }
 };
 
