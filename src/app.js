@@ -21,7 +21,8 @@ const server = createServer(app);
 export const io = new Server(server, socketConfig);
 export const isProduction = process.env.NODE_ENV === "production";
 
-// app.use(isHttps);
+app.set("trust proxy", true);
+app.use(isHttps);
 app.use(cors(corsConfig));
 app.use(helmet(helmetConfig));
 app.use(morgan(morganFormat, morganFnc));
@@ -38,7 +39,7 @@ app.use((err, req, res, next) => {
     if (res.headersSent) {
         return next(err);
     }
-    
+
     if (err instanceof apiError) {
         res.status(err.status).json({
             message: err.message,
