@@ -19,8 +19,6 @@ export const createAccount = asyncHandler(async (req, res) => {
 });
 
 export const getUser = asyncHandler(async (req, res) => {
-    console.log(req);
-
     const token = req.user;
     const data = {
         username: token,
