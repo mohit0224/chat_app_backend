@@ -1,4 +1,5 @@
 import { isProduction } from "../app.js";
+import envConfig from "../config/env.config.js";
 import asyncHandler from "../utils/asynchandler.utils.js";
 import { apiResponse } from "../utils/httpresponse.utils.js";
 
@@ -8,6 +9,7 @@ const cookieOptions = (time) => {
         secure: isProduction,
         sameSite: "None",
         maxAge: time,
+        domain: envConfig.FRONTEND_URI,
     };
 };
 
