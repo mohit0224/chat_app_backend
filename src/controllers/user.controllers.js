@@ -9,7 +9,7 @@ const cookieOptions = (time) => {
         secure: isProduction,
         sameSite: "none",
         maxAge: time,
-        domain: "test-front-six-teal.vercel.app",
+        domain: ".test-front-six-teal.vercel.app",
     };
 };
 
