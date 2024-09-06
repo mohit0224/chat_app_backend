@@ -1,4 +1,4 @@
-import { apiError } from "../utils/httpresponse.utils.js";
+import { apiResponse } from "../utils/httpresponse.utils.js";
 
 const isLoggedIn = (req, res, next) => {
     const { token } = req.cookies;
