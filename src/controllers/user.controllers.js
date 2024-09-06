@@ -2,9 +2,9 @@ import { isProduction } from "../app.js";
 import asyncHandler from "../utils/asynchandler.utils.js";
 import { apiResponse } from "../utils/httpresponse.utils.js";
 
-const cookieOptions = (time) => {
+const cookieOptions = (cookieExpiry) => {
     return {
-        maxAge: time,
+        maxAge: cookieExpiry,
         httpOnly: true,
         secure: isProduction,
         sameSite: isProduction ? "None" : "Strict",
