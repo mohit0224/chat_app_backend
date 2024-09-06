@@ -7,9 +7,9 @@ const cookieOptions = (time) => {
     return {
         httpOnly: true,
         secure: isProduction,
-        sameSite: "Strict",
+        sameSite: "none",
         maxAge: time,
-        domain: envConfig.FRONTEND_URI,
+        domain: "test-front-six-teal.vercel.app",
     };
 };
 
