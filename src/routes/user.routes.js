@@ -4,7 +4,7 @@ import isLoggedIn from "../middlewares/isLoggedIn.middleware.js";
 
 const router = Router();
 
-router.post("/create", createAccount);
+router.post("/", createAccount);
 
 router.get("/", isLoggedIn, getUser);
 
