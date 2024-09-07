@@ -14,6 +14,7 @@ import compression from "compression";
 import isHttps from "./middlewares/isHttps.middleware.js";
 import healthRouter from "./routes/health.routes.js";
 import userRouter from "./routes/user.routes.js";
+import messageRouter from "./routes/message.routes.js";
 import globalErrorHandler from "./middlewares/globalErrorHandler.middleware.js";
 import socketProvider from "./provider/socketProvider.provider.js";
 
@@ -37,6 +38,7 @@ socketProvider(io);
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/health-check", healthRouter);
+app.use("/api/v1/messages", messageRouter);
 
 app.use(globalErrorHandler);
 

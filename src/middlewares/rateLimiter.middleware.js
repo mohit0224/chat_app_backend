@@ -9,8 +9,9 @@ const limiter = (max = 5) =>
         headers: true,
         handler: (req, res, next, options) => {
             res.status(options.statusCode).json({
-                success: false,
                 message: options.message,
+                status: options.statusCode,
+                success: false,
             });
         },
     });

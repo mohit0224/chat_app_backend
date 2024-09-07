@@ -1,6 +1,8 @@
 import { isProduction } from "../app.js";
+import User from "../models/user.models.js";
+import { loginSchema, regesterSchema } from "../schema/user.schema.js";
 import asyncHandler from "../utils/asynchandler.utils.js";
-import { apiResponse } from "../utils/httpresponse.utils.js";
+import { apiResponse, apiError } from "../utils/httpresponse.utils.js";
 
 const cookieOptions = (cookieExpiry) => {
     return {
@@ -13,16 +15,61 @@ const cookieOptions = (cookieExpiry) => {
 };
 
 export const createAccount = asyncHandler(async (req, res) => {
-    res.cookie("token", "mohit-dheer", cookieOptions(5 * 60 * 1000))
+    const { error } = regesterSchema.validate(req.body);
+    if (error) {
+        throw new apiError(400, error.details[0].message);
+    }
+
+    const { email, username, password } = req.body;
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        throw new apiError(400, "User with this email already exists.");
+    }
+
+    const newUser = new User({ email, username, password });
+    const createdUser = await newUser.save();
+    console.log("🚀 ~ createAccount ~ createdUser:", createdUser);
+
+    res.status(201).json(new apiResponse(201, "user created", createdUser));
+});
+
+export const loginAccount = asyncHandler(async (req, res) => {
+    const { error } = loginSchema.validate(req.body);
+    if (error) {
+        throw new apiError(400, error.details[0].message);
+    }
+
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) {
+        throw new apiError(400, "Invalid credentials !!");
+    }
+
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
+        throw new apiError(400, "Invalid credentials !!");
+    }
+
+    const token = user.getSignedJwtToken();
+
+    res.cookie("token", token, cookieOptions(30 * 24 * 60 * 60 * 1000))
         .status(200)
-        .json(new apiResponse(200, "user created"));
+        .json(new apiResponse(200, "LoggedIn successfully !!", token));
 });
 
 export const getUser = asyncHandler(async (req, res) => {
-    const token = req.user;
-    const data = {
-        username: token,
-        pass: "dfnvbsdnvb76sdf9v76sd8f7",
-    };
-    res.status(200).json(new apiResponse(200, "get user", data));
+    const { id } = req.user;
+
+    const user = await User.findById(id).select("-password");
+    if (!user) {
+        throw new apiError(404, "User not found");
+    }
+
+    res.status(200).json(new apiResponse(200, "Get loggedIn user !!", user));
+});
+
+export const logoutAccount = asyncHandler(async (req, res) => {
+    res.clearCookie("token")
+        .status(200)
+        .json(new apiResponse(200, "Logout successfully !!"));
 });

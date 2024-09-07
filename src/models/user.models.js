@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import envConfig from "../config/env.config.js";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
     {
@@ -9,7 +10,6 @@ const userSchema = new mongoose.Schema(
             required: true,
             trim: true,
             minlength: 3,
-            unique: true,
         },
         email: {
             type: String,
@@ -23,11 +23,6 @@ const userSchema = new mongoose.Schema(
             required: true,
             minlength: 8,
         },
-
-        isActive: {
-            type: Boolean,
-            default: true,
-        },
         isVerified: {
             type: Boolean,
             default: false,
@@ -36,12 +31,6 @@ const userSchema = new mongoose.Schema(
         verificationTokenExpires: Date,
         passwordResetToken: String,
         passwordResetExpires: Date,
-        tasks: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Task",
-            },
-        ],
     },
     {
         timestamps: true,
@@ -61,6 +50,10 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
+};
+
+userSchema.methods.getSignedJwtToken = function () {
+    return jwt.sign({ id: this._id }, envConfig.JWT_SECRET);
 };
 
 const User = mongoose.model("User", userSchema);
