@@ -28,7 +28,6 @@ export const createAccount = asyncHandler(async (req, res) => {
 
     const newUser = new User({ email, username, password });
     const createdUser = await newUser.save();
-    console.log("🚀 ~ createAccount ~ createdUser:", createdUser);
 
     res.status(201).json(new apiResponse(201, "user created", createdUser));
 });
@@ -72,4 +71,18 @@ export const logoutAccount = asyncHandler(async (req, res) => {
     res.clearCookie("token")
         .status(200)
         .json(new apiResponse(200, "Logout successfully !!"));
+});
+
+export const getAllUser = asyncHandler(async (req, res) => {
+    const allUsers = await User.find({
+        _id: { $ne: req.user.id },
+    }).select("-password");
+
+    if (!allUsers.length) {
+        throw new apiError(404, "No users found.");
+    }
+
+    res.status(200).json(
+        new apiResponse(200, "Users retrieved successfully", allUsers)
+    );
 });

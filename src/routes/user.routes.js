@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
     createAccount,
+    getAllUser,
     getUser,
     loginAccount,
     logoutAccount,
@@ -16,5 +17,6 @@ router.post("/login", limiter(), loginAccount);
 router.post("/logout", isLoggedIn, logoutAccount);
 
 router.get("/", isLoggedIn, getUser);
+router.get("/get-all-users", isLoggedIn, getAllUser);
 
 export default router;
