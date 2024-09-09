@@ -11,6 +11,7 @@ const corsConfig = {
     },
     methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
     credentials: true,
+    allowedHeaders: ["Content-Type"],
     optionsSuccessStatus: 204,
     maxAge: 600,
 };
