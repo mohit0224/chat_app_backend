@@ -3,10 +3,9 @@ const users = {};
 const socketProvider = (io) => {
     io.on("connection", (socket) => {
         const { userId } = socket.handshake.auth;
-        if (users !== undefined) {
+        if (userId !== undefined) {
             users[userId] = socket.id;
         }
-
         io.emit("whoIsOnline", Object.keys(users));
 
         socket.on("disconnect", () => {
