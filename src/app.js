@@ -36,6 +36,8 @@ app.use(compression());
 
 socketProvider(io);
 
+app.get("/", (req, res) => res.send("Hello world !!"));
+
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/health-check", healthRouter);
 app.use("/api/v1/messages", messageRouter);
