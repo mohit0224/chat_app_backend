@@ -1,4 +1,5 @@
 import { isProduction } from "../app.js";
+import Conversation from "../models/conversation.models.js";
 import User from "../models/user.models.js";
 import { loginSchema, regesterSchema } from "../schema/user.schema.js";
 import asyncHandler from "../utils/asynchandler.utils.js";
@@ -84,5 +85,27 @@ export const getAllUser = asyncHandler(async (req, res) => {
 
     res.status(200).json(
         new apiResponse(200, "Users retrieved successfully", allUsers)
+    );
+});
+
+export const getConverstaionUser = asyncHandler(async (req, res) => {
+    const { id: loggedInUserID } = req.user;
+
+    const conversationUser = await Conversation.find({
+        participants: loggedInUserID,
+    }).populate({
+        path: "participants",
+        match: { _id: { $ne: loggedInUserID } },
+        select: "username email",
+    });
+
+    if (!conversationUser || conversationUser.length === 0) {
+        return res
+            .status(404)
+            .json(new apiResponse(404, "No conversations found for the user"));
+    }
+
+    res.status(200).json(
+        new apiResponse(200, "Get all conversation users !!", conversationUser)
     );
 });

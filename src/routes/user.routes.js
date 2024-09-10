@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
     createAccount,
     getAllUser,
+    getConverstaionUser,
     getUser,
     loginAccount,
     logoutAccount,
@@ -18,5 +19,6 @@ router.post("/logout", isLoggedIn, logoutAccount);
 
 router.get("/", isLoggedIn, getUser);
 router.get("/get-all-users", isLoggedIn, getAllUser);
+router.get("/get-conversation-user", isLoggedIn, getConverstaionUser);
 
 export default router;

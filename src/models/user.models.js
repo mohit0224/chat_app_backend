@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose, Schema } from "mongoose";
 import bcrypt from "bcrypt";
 import envConfig from "../config/env.config.js";
 import jwt from "jsonwebtoken";
@@ -27,6 +27,12 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        conversation: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Conversation",
+            },
+        ],
         verificationToken: String,
         verificationTokenExpires: Date,
         passwordResetToken: String,
