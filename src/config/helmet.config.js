@@ -1,12 +1,12 @@
 const helmetConfig = {
     contentSecurityPolicy: {
         directives: {
-            defaultSrc: ["'self'", process.env.FRONTEND_URI],
-            scriptSrc: ["'self'", process.env.FRONTEND_URI],
-            styleSrc: ["'self'", process.env.FRONTEND_URI],
-            fontSrc: ["'self'", "https://fonts.gstatic.com"],
-            imgSrc: ["'self'", "data:", process.env.FRONTEND_URI],
-            connectSrc: ["'self'", process.env.FRONTEND_URI],
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'"],
+            styleSrc: ["'self'"],
+            fontSrc: ["'self'"],
+            imgSrc: ["'self'", "data:"],
+            connectSrc: ["'self'"],
             frameSrc: ["'self'"],
             objectSrc: ["'none'"],
         },
